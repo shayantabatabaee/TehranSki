@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="50dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="20"
+    android:orientation="vertical"
+    android:layout_marginRight="@dimen/activity_margin">
+    <TextView
+        android:text="Thu"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dayName"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+    <TextView
+        android:background="@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp" />
+    <ImageView
+        android:src="@drawable/daycloud"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/BottomImage"
+        android:layout_marginTop="3dp" />
+    <TextView
+        android:text="5 cm"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BottomSnowText"
+        android:textSize="15sp" />
+    <TextView
+        android:text="27 / 30 c"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/MinMaxBottomTemp"
+        android:layout_marginTop="3dp"
+        android:textSize="10sp" />
+</LinearLayout>
