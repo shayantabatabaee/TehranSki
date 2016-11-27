@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ProgressBar
             android:layout_width="85dp"
@@ -30,7 +30,7 @@
         android:orientation="horizontal"
         android:paddingBottom="@dimen/fragment_topLayout_vertical_padding"
         android:paddingTop="@dimen/fragment_topLayout_vertical_padding"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -210,7 +210,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"></View>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/BottomLayout"

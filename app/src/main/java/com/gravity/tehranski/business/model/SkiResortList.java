@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class SkiResortList {
 
     private static SkiResortList ourInstance = new SkiResortList();
-    private static ArrayList<String> resortsName;
+    private static ArrayList<String> resortNames;
 
 
     public static SkiResortList getInstance() {
@@ -14,20 +14,20 @@ public class SkiResortList {
 
     private SkiResortList() {
 
-        resortsName = new ArrayList<>();
+        resortNames = new ArrayList<>();
 
-        resortsName.add("Montafon");
-        resortsName.add("SecretGarden");
-        resortsName.add("Shemshak");
-        resortsName.add("Tochal");
-        resortsName.add("Cochran");
-        resortsName.add("Dizin");
-        resortsName.add("Darbandsar");
-        resortsName.add("Abali");
+        resortNames.add("Montafon");
+        resortNames.add("SecretGarden");
+        resortNames.add("Shemshak");
+        resortNames.add("Tochal");
+        resortNames.add("Cochran");
+        resortNames.add("Dizin");
+        resortNames.add("Darbandsar");
+        resortNames.add("Abali");
 
     }
 
     public ArrayList<String> getResortsName() {
-        return resortsName;
+        return resortNames;
     }
 }

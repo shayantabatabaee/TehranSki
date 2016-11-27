@@ -38,7 +38,6 @@ public class VolleyHelper {
     public VolleyHelper(Context context) {
 
         requestQueue = Volley.newRequestQueue(context);
-        requestQueue.getCache().clear();
 
         PROCESS_ERROR = context.getResources().getString(R.string.process_error);
         RETRIEVE_ERROR = context.getResources().getString(R.string.retrieve_error);
@@ -48,7 +47,7 @@ public class VolleyHelper {
     public void getResortInfo(final String resortName, final String height, final SkiResortListener listener) {
 
 
-        if(requestQueue.getCache().get(createUrl(resortName)) == null) {
+        if (requestQueue.getCache().get(createUrl(resortName)) == null) {
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET, createUrl(resortName), new Response.Listener<String>() {
                 @Override
@@ -81,9 +80,7 @@ public class VolleyHelper {
 
             requestQueue.add(stringRequest);
 
-        }
-        else
-        {
+        } else {
             listener.OnCached();
 
         }
@@ -91,10 +88,14 @@ public class VolleyHelper {
 
     }
 
-    public void CancelAll(String tag){
+    public void CancelAll(String tag) {
 
         requestQueue.cancelAll(createUrl(tag));
         System.out.println("canceled" + tag);
+    }
+
+    public void clearCache() {
+        requestQueue.getCache().clear();
     }
 
     private String createUrl(String resortName) {

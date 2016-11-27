@@ -1,36 +1,51 @@
 package com.gravity.tehranski.app;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import com.gravity.tehranski.R;
 import com.gravity.tehranski.business.model.SkiResort;
 import com.gravity.tehranski.business.model.SkiResortList;
 import com.gravity.tehranski.business.net.VolleyHelper;
 
-public class MyFragmentActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
+public class HomeActivity extends AppCompatActivity{
 
-    private VolleyHelper volleyHelper;
-    private FragmentAdapter adapter;
+    // layout Objects
+    private View background;
+    private ViewPager viewPager;
+
+    // data Objects
     private int position;
-    View background;
     private String currentBackground;
+
+    // adapter objects
+    private FragmentAdapter adapter;
+
+    // helper objects
+    private VolleyHelper volleyHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
+        findViews();
+
+        initObjects();
+    }
+
+    private void findViews() {
         background = findViewById(R.id.background);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+    }
 
-        adapter = new FragmentAdapter(getSupportFragmentManager());
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+    private void initObjects() {
+        volleyHelper = new VolleyHelper(this);
+        adapter = new FragmentAdapter(getSupportFragmentManager(), SkiResortList.getInstance().getResortsName());
         viewPager.setAdapter(adapter);
 
         viewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
@@ -41,68 +56,21 @@ public class MyFragmentActivity extends FragmentActivity implements ViewPager.On
                 page.setScaleY(normalPosition / 5 + 0.8f);
             }
         });
-        viewPager.addOnPageChangeListener(this);
-
     }
 
     @Override
     protected void onResume() {
-
         super.onResume();
-        volleyHelper = new VolleyHelper(this);
+        volleyHelper.clearCache();
         currentBackground = "";
-        onPageSelected(position);
     }
 
     @Override
     protected void onPause() {
-
         super.onPause();
-        adapter.hideData();
+//        adapter.hideData();
         findViewById(R.id.background).setBackgroundResource(R.color.colorTransparent);
         findViewById(R.id.mainLayout).setBackgroundResource(R.color.colorPrimary);
-    }
-
-    @Override
-    public void onPageSelected(final int position) {
-
-        this.position = position;
-        final String resortName = SkiResortList.getInstance().getResortsName().get(position);
-        volleyHelper.getResortInfo(resortName, "max", new VolleyHelper.SkiResortListener() {
-            @Override
-            public void OnSuccess(SkiResort skiresort) {
-                if (!skiresort.getForecasts().get(0).get_plcname().equals(currentBackground)) {
-                    SetBackground(skiresort);
-                }
-                adapter.displayData(skiresort, position);
-
-            }
-
-            @Override
-            public void OnFailure(String message) {
-
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                volleyHelper.CancelAll(resortName);
-            }
-
-            @Override
-            public void OnCached() {
-                if (!adapter.getSkiResort(position).getForecasts().get(0).get_plcname().equals(currentBackground)) {
-                    SetBackground(adapter.getSkiResort(position));
-                }
-            }
-        });
-
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 
     private void SetBackground(final SkiResort skiResort) {
@@ -133,6 +101,4 @@ public class MyFragmentActivity extends FragmentActivity implements ViewPager.On
             }
         });
     }
-
-
 }

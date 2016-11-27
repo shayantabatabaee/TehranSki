@@ -2,59 +2,27 @@ package com.gravity.tehranski.app;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.gravity.tehranski.business.model.SkiResort;
-import com.gravity.tehranski.business.model.SkiResortList;
+import java.util.ArrayList;
 
-public class FragmentAdapter extends FragmentPagerAdapter {
+public class FragmentAdapter extends FragmentStatePagerAdapter {
 
-    private MyFragment[] myFragment;
+    private ArrayList<String> resortNames;
 
-
-    public FragmentAdapter(FragmentManager fm) {
+    public FragmentAdapter(FragmentManager fm, ArrayList<String> resortNames) {
         super(fm);
-
-        myFragment = new MyFragment[SkiResortList.getInstance().getResortsName().size()];
+        this.resortNames = resortNames;
     }
 
     @Override
     public int getCount() {
-        return SkiResortList.getInstance().getResortsName().size();
+        return resortNames == null ? 0 : resortNames.size();
     }
 
     @Override
     public Fragment getItem(int position) {
-
-
-        if (myFragment[position] == null) {
-            myFragment[position] = new MyFragment();
-
-        }
-
-        return myFragment[position];
+        return SkiResortFragment.newInstance(resortNames.get(position), position);
     }
-
-    public SkiResort getSkiResort(int position) {
-        return myFragment[position].getSkiResort();
-    }
-
-    public void displayData(SkiResort skiResort, int position) {
-
-        if (myFragment[position] != null) {
-            myFragment[position].displayData(skiResort);
-        }
-    }
-
-    public void hideData() {
-
-        for (int i = 0; i < getCount(); i++) {
-            if (myFragment[i] != null) {
-                myFragment[i].hideData();
-            }
-        }
-    }
-
-
 }
 
