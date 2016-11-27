@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.gravity.tehranski.business.model.SkiResort;
 import com.gravity.tehranski.business.model.SkiResortList;
 
-public class FragmentAdapter extends FragmentPagerAdapter{
+public class FragmentAdapter extends FragmentPagerAdapter {
 
     private MyFragment[] myFragment;
 
@@ -27,8 +27,7 @@ public class FragmentAdapter extends FragmentPagerAdapter{
     public Fragment getItem(int position) {
 
 
-        if(myFragment[position]== null)
-        {
+        if (myFragment[position] == null) {
             myFragment[position] = new MyFragment();
 
         }
@@ -40,23 +39,21 @@ public class FragmentAdapter extends FragmentPagerAdapter{
         return myFragment[position].getSkiResort();
     }
 
-    public void displayData(SkiResort skiResort, int position){
+    public void displayData(SkiResort skiResort, int position) {
 
-        if(myFragment[position] !=null){
+        if (myFragment[position] != null) {
             myFragment[position].displayData(skiResort);
         }
     }
 
-    public void hideData(){
+    public void hideData() {
 
-        for(int i=0;i<getCount();i++){
-            if(myFragment[i] != null) {
+        for (int i = 0; i < getCount(); i++) {
+            if (myFragment[i] != null) {
                 myFragment[i].hideData();
             }
         }
     }
-
-
 
 
 }
