@@ -45,46 +45,36 @@ public class VolleyHelper {
     }
 
     public void getResortInfo(final String resortName, final String height, final SkiResortListener listener) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, createUrl(resortName), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
+                Document doc;
+                ArrayList<ForeCast> forecasts;
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-        if (requestQueue.getCache().get(createUrl(resortName)) == null) {
+                try {
+                    DocumentBuilder builder = factory.newDocumentBuilder();
+                    doc = builder.parse(new InputSource(new StringReader(response)));
+                    forecasts = XmlParser.ParseXml(doc, height);
+                    SkiResort skiResort = new SkiResort(resortName, height);
+                    skiResort.setForecasts(forecasts);
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, createUrl(resortName), new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
+                    listener.OnSuccess(skiResort);
 
-                    Document doc;
-                    ArrayList<ForeCast> forecasts;
-                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                } catch (ParserConfigurationException | IOException | SAXException e) {
+                    listener.OnFailure(PROCESS_ERROR);
 
-                    try {
-                        DocumentBuilder builder = factory.newDocumentBuilder();
-                        doc = builder.parse(new InputSource(new StringReader(response)));
-                        forecasts = XmlParser.ParseXml(doc, height);
-                        SkiResort skiResort = new SkiResort(resortName, height);
-                        skiResort.setForecasts(forecasts);
-
-                        listener.OnSuccess(skiResort);
-
-                    } catch (ParserConfigurationException | IOException | SAXException e) {
-                        listener.OnFailure(PROCESS_ERROR);
-
-                    }
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    listener.OnFailure(RETRIEVE_ERROR);
-                }
-            });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.OnFailure(RETRIEVE_ERROR);
+            }
+        });
 
-            requestQueue.add(stringRequest);
-
-        } else {
-            listener.OnCached();
-
-        }
-
+        requestQueue.add(stringRequest);
 
     }
 
@@ -92,10 +82,6 @@ public class VolleyHelper {
 
         requestQueue.cancelAll(createUrl(tag));
         System.out.println("canceled" + tag);
-    }
-
-    public void clearCache() {
-        requestQueue.getCache().clear();
     }
 
     private String createUrl(String resortName) {
@@ -107,7 +93,5 @@ public class VolleyHelper {
         void OnSuccess(SkiResort skiresort);
 
         void OnFailure(String message);
-
-        void OnCached();
     }
 }

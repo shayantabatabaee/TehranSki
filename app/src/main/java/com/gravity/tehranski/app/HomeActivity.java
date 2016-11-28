@@ -12,7 +12,7 @@ import com.gravity.tehranski.business.model.SkiResort;
 import com.gravity.tehranski.business.model.SkiResortList;
 import com.gravity.tehranski.business.net.VolleyHelper;
 
-public class HomeActivity extends AppCompatActivity{
+public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     // layout Objects
     private View background;
@@ -61,7 +61,7 @@ public class HomeActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        volleyHelper.clearCache();
+
         currentBackground = "";
     }
 
@@ -73,32 +73,49 @@ public class HomeActivity extends AppCompatActivity{
         findViewById(R.id.mainLayout).setBackgroundResource(R.color.colorPrimary);
     }
 
-    private void SetBackground(final SkiResort skiResort) {
+    public void SetBackground(final SkiResort skiResort, int position) {
 
-        currentBackground = skiResort.getForecasts().get(0).get_plcname();
-        background.setBackgroundResource(getResources().getIdentifier(skiResort.getForecasts().get(0).get_plcname()
-                , "drawable", this.getPackageName()));
+        if (position != this.position) {
+            currentBackground = skiResort.getForecasts().get(0).get_plcname();
+            background.setBackgroundResource(getResources().getIdentifier(skiResort.getForecasts().get(0).get_plcname()
+                    , "drawable", this.getPackageName()));
 
-        Animation FadeIn = AnimationUtils.loadAnimation(this, R.anim.fadein);
+            Animation FadeIn = AnimationUtils.loadAnimation(this, R.anim.fadein);
 
-        background.startAnimation(FadeIn);
-        FadeIn.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+            background.startAnimation(FadeIn);
+            FadeIn.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
 
-            }
+                }
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
+                @Override
+                public void onAnimationEnd(Animation animation) {
 
-                findViewById(R.id.mainLayout).setBackgroundResource(getResources().getIdentifier(skiResort.getForecasts().get(0).get_plcname()
-                        , "drawable", getPackageName()));
-            }
+                    findViewById(R.id.mainLayout).setBackgroundResource(getResources().getIdentifier(skiResort.getForecasts().get(0).get_plcname()
+                            , "drawable", getPackageName()));
+                }
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {
+                @Override
+                public void onAnimationRepeat(Animation animation) {
 
-            }
-        });
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        this.position = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

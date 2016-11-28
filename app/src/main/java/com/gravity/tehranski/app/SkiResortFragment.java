@@ -9,10 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gravity.tehranski.R;
+import com.gravity.tehranski.business.SkiResortRepository;
 import com.gravity.tehranski.business.model.SkiResort;
-import com.gravity.tehranski.business.net.VolleyHelper;
 
 
 public class SkiResortFragment extends Fragment {
@@ -23,17 +24,13 @@ public class SkiResortFragment extends Fragment {
 
     // layout objects
     private View bottomView;
-    private LinearLayout bottomLayout;
 
     // data objects
     private String resortName;
     private int position;
-    private SkiResort skiResort;
 
-    // helper objects
-    private VolleyHelper volleyHelper;
-
-    private LayoutInflater inflater1;
+    // repository objects
+    private SkiResortRepository skiResortRepository;
 
     public SkiResortFragment() {
         // it is necessary
@@ -53,39 +50,47 @@ public class SkiResortFragment extends Fragment {
         super.onCreate(savedInstanceState);
         resortName = getArguments().getString(ARG_RESORT_NAME);
         position = getArguments().getInt(ARG_POSITION);
-        volleyHelper = new VolleyHelper(getContext());
+        skiResortRepository = new SkiResortRepository(getContext());
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_skiresort, container, false);
+        HomeActivity homeActivity = null;
+        if (getActivity() instanceof HomeActivity) {
+            homeActivity = (HomeActivity) getActivity();
 
-        volleyHelper.getResortInfo(resortName, "min", new VolleyHelper.SkiResortListener() {
-                    @Override
-                    public void OnSuccess(SkiResort skiresort) {
-                        displayData(skiresort, rootView);
-                    }
-
-                    @Override
-                    public void OnFailure(String message) {
-                        // TODO: implement this shit
-                        "dfd".toString();
-                    }
-
-                    @Override
-                    public void OnCached() {
-                        // TODO: implement this shit
-                        "dfd".toString();
-                    }
+        }
+        final HomeActivity finalHomeActivity = homeActivity;
+        skiResortRepository.getSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
+            @Override
+            public void OnSuccess(SkiResort skiResort) {
+                if (finalHomeActivity != null) {
+                    finalHomeActivity.SetBackground(skiResort, position);
                 }
-        );
+                displayData(skiResort, rootView, inflater);
+            }
+
+            @Override
+            public void OnFailure(String message) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void OnCached(SkiResort skiResort) {
+                if (finalHomeActivity != null) {
+                    finalHomeActivity.SetBackground(skiResort, position);
+                }
+                displayData(skiResort, rootView, inflater);
+
+            }
+        });
         return rootView;
 
     }
 
-    public void displayData(SkiResort skiResort, View rootView) {
-        this.skiResort = skiResort;
+    public void displayData(SkiResort skiResort, View rootView, LayoutInflater inflater) {
         TextView ResortName = (TextView) rootView.findViewById(R.id.resortName);
         ImageView CurrentConditionImg = (ImageView) rootView.findViewById(R.id.CurrentConditionImg);
         TextView CurrentTemp = (TextView) rootView.findViewById(R.id.CurrentTemp);
@@ -105,10 +110,11 @@ public class SkiResortFragment extends Fragment {
         Rain.setText(skiResort.getForecasts().get(0).get_pprec());
         Wind.setText(skiResort.getForecasts().get(0).get_pwsymbol());
 
-        bottomLayout.removeAllViews();
+//        bottomLayout.removeAllViews();
 
+        LinearLayout bottomLayout = (LinearLayout) rootView.findViewById(R.id.BottomLayout);
         for (int i = 1; i < skiResort.getForecasts().size(); i++) {
-            bottomView = inflater1.inflate(R.layout.fragment_bottom, bottomLayout, false);
+            bottomView = inflater.inflate(R.layout.fragment_bottom, bottomLayout, false);
             TextView dayName = (TextView) bottomView.findViewById(R.id.dayName);
             ImageView bottomImage = (ImageView) bottomView.findViewById(R.id.BottomImage);
             TextView bottomSnowText = (TextView) bottomView.findViewById(R.id.BottomSnowText);
@@ -134,4 +140,5 @@ public class SkiResortFragment extends Fragment {
 //        rootView.findViewById(R.id.fragmentTopLayout).setVisibility(View.GONE);
 //        rootView.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
     }
+
 }
