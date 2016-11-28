@@ -3,6 +3,8 @@ package com.gravity.tehranski.app;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,7 @@ import com.gravity.tehranski.business.SkiResortRepository;
 import com.gravity.tehranski.business.model.SkiResort;
 
 
-public class SkiResortFragment extends Fragment {
+public class SkiResortFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
     // constant objects
     private static final String ARG_RESORT_NAME = "ARG_RESORT_NAME";
@@ -31,6 +33,12 @@ public class SkiResortFragment extends Fragment {
 
     // repository objects
     private SkiResortRepository skiResortRepository;
+
+    // viewPager objects
+    private ViewPager viewPager;
+    private int currentPagerPosition;
+    private HomeActivity homeActivity;
+    private SkiResort skiResort;
 
     public SkiResortFragment() {
         // it is necessary
@@ -57,18 +65,15 @@ public class SkiResortFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_skiresort, container, false);
-        HomeActivity homeActivity = null;
         if (getActivity() instanceof HomeActivity) {
             homeActivity = (HomeActivity) getActivity();
-
+            viewPager = homeActivity.getViewPager();
+            viewPager.addOnPageChangeListener(this);
         }
-        final HomeActivity finalHomeActivity = homeActivity;
         skiResortRepository.getSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
             @Override
             public void OnSuccess(SkiResort skiResort) {
-                if (finalHomeActivity != null) {
-                    finalHomeActivity.SetBackground(skiResort, position);
-                }
+                SkiResortFragment.this.skiResort = skiResort;
                 displayData(skiResort, rootView, inflater);
             }
 
@@ -79,9 +84,7 @@ public class SkiResortFragment extends Fragment {
 
             @Override
             public void OnCached(SkiResort skiResort) {
-                if (finalHomeActivity != null) {
-                    finalHomeActivity.SetBackground(skiResort, position);
-                }
+                SkiResortFragment.this.skiResort = skiResort;
                 displayData(skiResort, rootView, inflater);
 
             }
@@ -141,4 +144,22 @@ public class SkiResortFragment extends Fragment {
 //        rootView.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        this.currentPagerPosition = position;
+        if (homeActivity != null && position == this.position && skiResort != null) {
+            homeActivity.setBackground(skiResort);
+            Log.d("debug", "condition = " + skiResort.getForecasts().get(0).get_plcname() + " ,position = " + this.position + " ,current pager position = " + position);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }
