@@ -3,8 +3,6 @@ package com.gravity.tehranski.app;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,7 @@ import com.gravity.tehranski.business.SkiResortRepository;
 import com.gravity.tehranski.business.model.SkiResort;
 
 
-public class SkiResortFragment extends Fragment implements ViewPager.OnPageChangeListener {
+public class SkiResortFragment extends Fragment {
 
     // constant objects
     private static final String ARG_RESORT_NAME = "ARG_RESORT_NAME";
@@ -33,12 +31,6 @@ public class SkiResortFragment extends Fragment implements ViewPager.OnPageChang
 
     // repository objects
     private SkiResortRepository skiResortRepository;
-
-    // viewPager objects
-    private ViewPager viewPager;
-    private int currentPagerPosition;
-    private HomeActivity homeActivity;
-    private SkiResort skiResort;
 
     public SkiResortFragment() {
         // it is necessary
@@ -65,35 +57,41 @@ public class SkiResortFragment extends Fragment implements ViewPager.OnPageChang
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_skiresort, container, false);
-        if (getActivity() instanceof HomeActivity) {
-            homeActivity = (HomeActivity) getActivity();
-            viewPager = homeActivity.getViewPager();
-            viewPager.addOnPageChangeListener(this);
-        }
+
         skiResortRepository.getSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
             @Override
             public void OnSuccess(SkiResort skiResort) {
-                SkiResortFragment.this.skiResort = skiResort;
                 displayData(skiResort, rootView, inflater);
+                setActivityBackground(skiResort);
             }
 
             @Override
             public void OnFailure(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "network problem", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void OnCached(SkiResort skiResort) {
-                SkiResortFragment.this.skiResort = skiResort;
                 displayData(skiResort, rootView, inflater);
-
+                setActivityBackground(skiResort);
             }
         });
         return rootView;
 
     }
 
+    private void setActivityBackground(SkiResort skiResort) {
+        if (getActivity() instanceof HomeActivity) {
+            ((HomeActivity) getActivity()).setBackground(skiResort, position);
+        }
+    }
+
     public void displayData(SkiResort skiResort, View rootView, LayoutInflater inflater) {
+        if (getActivity() == null) {
+            // the fragment is not attached to any activity. so there is no need to show the data
+            return;
+        }
+
         TextView ResortName = (TextView) rootView.findViewById(R.id.resortName);
         ImageView CurrentConditionImg = (ImageView) rootView.findViewById(R.id.CurrentConditionImg);
         TextView CurrentTemp = (TextView) rootView.findViewById(R.id.CurrentTemp);
@@ -142,24 +140,5 @@ public class SkiResortFragment extends Fragment implements ViewPager.OnPageChang
 //        rootView.findViewById(R.id.BottomLayout).setVisibility(View.GONE);
 //        rootView.findViewById(R.id.fragmentTopLayout).setVisibility(View.GONE);
 //        rootView.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        this.currentPagerPosition = position;
-        if (homeActivity != null && position == this.position && skiResort != null) {
-            homeActivity.setBackground(skiResort);
-            Log.d("debug", "condition = " + skiResort.getForecasts().get(0).get_plcname() + " ,position = " + this.position + " ,current pager position = " + position);
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 }

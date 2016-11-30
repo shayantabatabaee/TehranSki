@@ -1,6 +1,7 @@
 package com.gravity.tehranski.app;
 
 import android.os.Bundle;
+import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,23 +12,17 @@ import android.view.animation.AnimationUtils;
 import com.gravity.tehranski.R;
 import com.gravity.tehranski.business.model.SkiResort;
 import com.gravity.tehranski.business.model.SkiResortList;
-import com.gravity.tehranski.business.net.VolleyHelper;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     // layout Objects
     private View background;
     private ViewPager viewPager;
 
     // data Objects
-    private int position = 0;
     private String currentBackground;
-
-    // adapter objects
-    private FragmentAdapter adapter;
-
-    // helper objects
-    private VolleyHelper volleyHelper;
+    private int currentPosition;
+    private SparseArrayCompat<SkiResort> skiResortHashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +40,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initObjects() {
-        volleyHelper = new VolleyHelper(this);
-        adapter = new FragmentAdapter(getSupportFragmentManager(), SkiResortList.getInstance().getResortsName());
+        currentPosition = 0;
+        currentBackground = "";
+        skiResortHashMap = new SparseArrayCompat<SkiResort>();
+
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), SkiResortList.getInstance().getResortsName());
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(this);
 
         viewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
             @Override
@@ -74,8 +73,23 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.mainLayout).setBackgroundResource(R.color.colorPrimary);
     }
 
-    public void setBackground(final SkiResort skiResort) {
+    public void setBackground(final SkiResort skiResort, int position) {
         Log.d("debug", "setBackground: " + skiResort.getForecasts().get(0).get_plcname());
+        skiResortHashMap.put(position, skiResort);
+
+        setBackground();
+    }
+
+    private void setBackground() {
+        final SkiResort skiResort = skiResortHashMap.get(currentPosition);
+
+        if (skiResort == null) {
+            return;
+        }
+
+        if (currentBackground.equals(skiResort.getForecasts().get(0).get_plcname())) {
+            return;
+        }
         currentBackground = skiResort.getForecasts().get(0).get_plcname();
         background.setBackgroundResource(getResources().getIdentifier(skiResort.getForecasts().get(0).get_plcname()
                 , "drawable", this.getPackageName()));
@@ -102,7 +116,19 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    public ViewPager getViewPager() {
-        return viewPager;
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        currentPosition = position;
+        setBackground();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

@@ -11,7 +11,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        final int SPLASH_SCREEN_DELAY = 3000;
+        final int SPLASH_SCREEN_DELAY = 1000;
 
         super.onCreate(savedInstanceState);
         new Handler().postDelayed(new Runnable() {
