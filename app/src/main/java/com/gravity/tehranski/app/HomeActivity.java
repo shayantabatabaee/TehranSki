@@ -63,6 +63,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     protected void onPause() {
+        //TODO: Make pause Functionality
         super.onPause();
 //        adapter.hideData();
         findViewById(R.id.background).setBackgroundResource(R.color.colorTransparent);
@@ -113,6 +114,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onPageSelected(int position) {
+        //TODO:If user move fast , data isn't ready so background can't be set.
         setBackground(position);
     }
 
