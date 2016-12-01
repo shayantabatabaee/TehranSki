@@ -14,8 +14,16 @@ public class SkiResortRepository {
 
     private CacheHelper cacheHelper;
     private VolleyHelper volleyHelper;
+    private static SkiResortRepository instance;
 
-    public SkiResortRepository(Context context) {
+    public static SkiResortRepository getInstance(Context context){
+        if(instance == null){
+            instance = new SkiResortRepository(context);
+        }
+        return instance;
+    }
+
+    private SkiResortRepository(Context context) {
         cacheHelper = CacheHelper.getInstance(context);
         volleyHelper = new VolleyHelper(context);
     }

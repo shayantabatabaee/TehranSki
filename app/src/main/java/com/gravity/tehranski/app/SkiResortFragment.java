@@ -22,9 +22,6 @@ public class SkiResortFragment extends Fragment {
     private static final String ARG_RESORT_NAME = "ARG_RESORT_NAME";
     private static final String ARG_POSITION = "ARG_POSITION";
 
-    // layout objects
-    private View bottomView;
-
     // data objects
     private String resortName;
     private int position;
@@ -50,7 +47,7 @@ public class SkiResortFragment extends Fragment {
         super.onCreate(savedInstanceState);
         resortName = getArguments().getString(ARG_RESORT_NAME);
         position = getArguments().getInt(ARG_POSITION);
-        skiResortRepository = new SkiResortRepository(getContext());
+        skiResortRepository = SkiResortRepository.getInstance(getContext());
     }
 
     @Nullable
@@ -67,7 +64,7 @@ public class SkiResortFragment extends Fragment {
 
             @Override
             public void OnFailure(String message) {
-                Toast.makeText(getContext(), "network problem", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -111,8 +108,7 @@ public class SkiResortFragment extends Fragment {
         Rain.setText(skiResort.getForecasts().get(0).get_pprec());
         Wind.setText(skiResort.getForecasts().get(0).get_pwsymbol());
 
-//        bottomLayout.removeAllViews();
-
+        View bottomView;
         LinearLayout bottomLayout = (LinearLayout) rootView.findViewById(R.id.BottomLayout);
         for (int i = 1; i < skiResort.getForecasts().size(); i++) {
             bottomView = inflater.inflate(R.layout.fragment_bottom, bottomLayout, false);
@@ -134,11 +130,5 @@ public class SkiResortFragment extends Fragment {
         rootView.findViewById(R.id.fragmentTopLayout).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.BottomLayout).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
-    }
-
-    public void hideData() {
-//        rootView.findViewById(R.id.BottomLayout).setVisibility(View.GONE);
-//        rootView.findViewById(R.id.fragmentTopLayout).setVisibility(View.GONE);
-//        rootView.findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
     }
 }

@@ -20,10 +20,10 @@ public class SkiResortList {
         resortNames.add("SecretGarden");
         resortNames.add("Shemshak");
         resortNames.add("Tochal");
-        resortNames.add("Cochran");
         resortNames.add("Dizin");
         resortNames.add("Darbandsar");
         resortNames.add("Abali");
+        resortNames.add("Cochran");
 
     }
 

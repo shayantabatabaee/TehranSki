@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -42,7 +41,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     private void initObjects() {
         currentPosition = 0;
         currentBackground = "";
-        skiResortHashMap = new SparseArrayCompat<SkiResort>();
+        skiResortHashMap = new SparseArrayCompat<>();
 
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), SkiResortList.getInstance().getResortsName());
         viewPager.setAdapter(adapter);
@@ -58,23 +57,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        currentBackground = "";
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-//        adapter.hideData();
-        findViewById(R.id.background).setBackgroundResource(R.color.colorTransparent);
-        findViewById(R.id.mainLayout).setBackgroundResource(R.color.colorPrimary);
-    }
-
     public void setBackground(final SkiResort skiResort, int position) {
-        Log.d("debug", "setBackground: " + skiResort.getForecasts().get(0).get_plcname());
         skiResortHashMap.put(position, skiResort);
 
         setBackground();
