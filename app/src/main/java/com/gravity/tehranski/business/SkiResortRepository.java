@@ -34,7 +34,7 @@ public class SkiResortRepository {
             return;
         }
 
-        volleyHelper.getResortInfo(key, "min", new VolleyHelper.SkiResortListener() {
+        volleyHelper.getResortInfo(key, "mid", new VolleyHelper.SkiResortListener() {
             @Override
             public void OnSuccess(SkiResort skiresort) {
                 cacheHelper.put(key, skiresort);
@@ -46,6 +46,12 @@ public class SkiResortRepository {
                 listener.OnFailure(message);
             }
         });
+    }
+
+    public static void clearCache(){
+        if(instance!=null){
+            instance.cacheHelper.evictAll();
+        }
     }
 
     public interface SkiResortListener {

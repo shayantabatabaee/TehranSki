@@ -47,5 +47,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/MinMaxBottomTemp"
         android:layout_marginTop="3dp"
-        android:textSize="10sp" />
+        android:textSize="9.5sp" />
 </LinearLayout>
