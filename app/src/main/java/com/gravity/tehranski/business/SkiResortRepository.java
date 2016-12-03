@@ -48,9 +48,11 @@ public class SkiResortRepository {
         });
     }
 
-    public static void clearCache(){
+    public static void clearCache(String key){
         if(instance!=null){
-            instance.cacheHelper.evictAll();
+            if(instance.cacheHelper.get(key) != null) {
+                instance.cacheHelper.remove(key);
+            }
         }
     }
 

@@ -1,30 +1,22 @@
 package com.gravity.tehranski.app;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.gravity.tehranski.R;
-import com.gravity.tehranski.business.SkiResortRepository;
 import com.gravity.tehranski.business.model.SkiResort;
 import com.gravity.tehranski.business.model.SkiResortList;
-
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     // layout Objects
     private View background;
     private ViewPager viewPager;
-    private SwipeRefreshLayout refreshLayout;
 
     // data Objects
     private String currentBackground;
@@ -47,11 +39,10 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     private void findViews() {
         background = findViewById(R.id.background);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
     }
 
     private void initObjects() {
-         currentPosition = 0;
+        currentPosition = 0;
         currentBackground = "";
         skiResortHashMap = new SparseArrayCompat<>();
 
@@ -65,24 +56,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                 float normalPosition = Math.abs(Math.abs(position) - 1);
                 page.setScaleX(normalPosition / 5 + 0.8f);
                 page.setScaleY(normalPosition / 5 + 0.8f);
-            }
-        });
-
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                SkiResortRepository.clearCache();
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                List<Fragment> fragments = fm.getFragments();
-                for (Fragment f : fragments) {
-                    if (f != null) {
-                        ft.detach(f);
-                        ft.attach(f);
-                    }
-                }
-                ft.commit();
-                refreshLayout.setRefreshing(false);
             }
         });
     }

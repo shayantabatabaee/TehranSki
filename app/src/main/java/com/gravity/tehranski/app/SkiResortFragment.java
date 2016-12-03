@@ -3,6 +3,7 @@ package com.gravity.tehranski.app;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,28 @@ public class SkiResortFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_skiresort, container, false);
 
+        getSkiResortData(rootView, inflater);
+
+        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                rootView.findViewById(R.id.fragmentTopLayout).setVisibility(View.GONE);
+                rootView.findViewById(R.id.BottomLayout).setVisibility(View.GONE);
+                refreshLayout.setRefreshing(true);
+                SkiResortRepository.clearCache(resortName);
+                getSkiResortData(rootView, inflater);
+                refreshLayout.setRefreshing(false);
+
+            }
+        });
+
+        return rootView;
+
+    }
+
+    private void getSkiResortData(final View rootView, final LayoutInflater inflater) {
         skiResortRepository.getSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
             @Override
             public void OnSuccess(SkiResort skiResort) {
@@ -73,8 +96,6 @@ public class SkiResortFragment extends Fragment {
                 setActivityBackground(skiResort);
             }
         });
-        return rootView;
-
     }
 
     private void setActivityBackground(SkiResort skiResort) {
@@ -109,7 +130,9 @@ public class SkiResortFragment extends Fragment {
         Wind.setText(skiResort.getForecasts().get(0).get_pwsymbol());
 
         View bottomView;
+
         LinearLayout bottomLayout = (LinearLayout) rootView.findViewById(R.id.BottomLayout);
+        bottomLayout.removeAllViews();
         for (int i = 1; i < skiResort.getForecasts().size(); i++) {
             bottomView = inflater.inflate(R.layout.fragment_bottom, bottomLayout, false);
             TextView dayName = (TextView) bottomView.findViewById(R.id.dayName);
