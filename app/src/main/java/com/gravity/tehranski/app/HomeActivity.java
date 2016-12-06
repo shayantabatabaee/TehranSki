@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.gravity.tehranski.R;
 import com.gravity.tehranski.business.model.SkiResort;
 import com.gravity.tehranski.business.model.SkiResortList;
@@ -22,6 +25,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     private String currentBackground;
     private int currentPosition;
     private SparseArrayCompat<SkiResort> skiResortHashMap;
+    private String playServiceError;
 
     //adapter object
     FragmentAdapter adapter;
@@ -34,6 +38,13 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         findViews();
 
         initObjects();
+
+        if(!IsPlayServiceAvailable()){
+            Toast.makeText(this,playServiceError,Toast.LENGTH_SHORT).show();
+            GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
+        }
+
+
     }
 
     private void findViews() {
@@ -58,6 +69,15 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                 page.setScaleY(normalPosition / 5 + 0.8f);
             }
         });
+        playServiceError = this.getResources().getString(R.string.play_service_error);
+    }
+
+    private boolean IsPlayServiceAvailable() {
+        int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            return false;
+        } else
+            return true;
     }
 
     public void setBackground(final SkiResort skiResort, int position) {

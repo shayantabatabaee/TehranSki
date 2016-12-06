@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".app.SplashActivity"
+        <activity
+            android:name=".app.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,10 +19,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".app.HomeActivity"
-            android:theme="@style/AppTheme">
-        </activity>
+        <activity
+            android:name=".app.HomeActivity"
+            android:theme="@style/AppTheme"/>
+
+        <activity
+            android:name=".app.NotificationActivity"
+            android:theme="@style/AppTheme"/>
+
+        <service android:exported="false" android:name=".business.net.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
-
-
 </manifest>

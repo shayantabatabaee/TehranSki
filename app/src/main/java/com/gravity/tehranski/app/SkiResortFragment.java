@@ -56,18 +56,15 @@ public class SkiResortFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_skiresort, container, false);
 
-        getSkiResortData(rootView, inflater);
+        getSkiResort(rootView, inflater);
 
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
-                rootView.findViewById(R.id.fragmentTopLayout).setVisibility(View.GONE);
-                rootView.findViewById(R.id.BottomLayout).setVisibility(View.GONE);
+                //TODO:Change rootView Style During Request.
                 refreshLayout.setRefreshing(true);
-                SkiResortRepository.clearCache(resortName);
-                getSkiResortData(rootView, inflater);
+                refreshSkiResort(rootView, inflater);
                 refreshLayout.setRefreshing(false);
 
             }
@@ -77,7 +74,7 @@ public class SkiResortFragment extends Fragment {
 
     }
 
-    private void getSkiResortData(final View rootView, final LayoutInflater inflater) {
+    public void getSkiResort(final View rootView, final LayoutInflater inflater) {
         skiResortRepository.getSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
             @Override
             public void OnSuccess(SkiResort skiResort) {
@@ -97,6 +94,26 @@ public class SkiResortFragment extends Fragment {
             }
         });
     }
+
+    public void refreshSkiResort(final View rootView, final LayoutInflater inflater) {
+        skiResortRepository.refreshSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
+            @Override
+            public void OnSuccess(SkiResort skiresort) {
+                displayData(skiresort, rootView, inflater);
+                setActivityBackground(skiresort);
+            }
+
+            @Override
+            public void OnFailure(String message) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void OnCached(SkiResort skiResort) {
+            }
+        });
+    }
+
 
     private void setActivityBackground(SkiResort skiResort) {
         if (getActivity() instanceof HomeActivity) {

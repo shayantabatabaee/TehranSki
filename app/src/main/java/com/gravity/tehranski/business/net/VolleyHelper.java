@@ -84,6 +84,10 @@ public class VolleyHelper {
         System.out.println("canceled" + tag);
     }
 
+    public void clearCache(String key) {
+        requestQueue.getCache().remove(createUrl(key));
+    }
+
     private String createUrl(String resortName) {
         return "http://www.snow-forecast.com/resorts/" + resortName + "/feed.xml";
     }

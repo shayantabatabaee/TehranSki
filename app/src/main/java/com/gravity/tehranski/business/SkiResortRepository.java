@@ -7,17 +7,15 @@ import com.gravity.tehranski.business.net.VolleyHelper;
 import com.gravity.tehranski.business.storage.cache.CacheHelper;
 
 
-/**
- * Created by shayantabatabee on 11/28/16.
- */
 public class SkiResortRepository {
 
     private CacheHelper cacheHelper;
     private VolleyHelper volleyHelper;
     private static SkiResortRepository instance;
+    private static String height = "min";
 
-    public static SkiResortRepository getInstance(Context context){
-        if(instance == null){
+    public static SkiResortRepository getInstance(Context context) {
+        if (instance == null) {
             instance = new SkiResortRepository(context);
         }
         return instance;
@@ -34,7 +32,7 @@ public class SkiResortRepository {
             return;
         }
 
-        volleyHelper.getResortInfo(key, "mid", new VolleyHelper.SkiResortListener() {
+        volleyHelper.getResortInfo(key, height, new VolleyHelper.SkiResortListener() {
             @Override
             public void OnSuccess(SkiResort skiresort) {
                 cacheHelper.put(key, skiresort);
@@ -48,9 +46,25 @@ public class SkiResortRepository {
         });
     }
 
-    public static void clearCache(String key){
-        if(instance!=null){
-            if(instance.cacheHelper.get(key) != null) {
+    public void refreshSkiResort(final String key, final SkiResortListener listener) {
+        volleyHelper.clearCache(key);
+        volleyHelper.getResortInfo(key, height, new VolleyHelper.SkiResortListener() {
+            @Override
+            public void OnSuccess(SkiResort skiresort) {
+                cacheHelper.put(key, skiresort);
+                listener.OnSuccess(skiresort);
+            }
+
+            @Override
+            public void OnFailure(String message) {
+                listener.OnFailure(message);
+            }
+        });
+    }
+
+    public static void clearCache(String key) {
+        if (instance != null) {
+            if (instance.cacheHelper.get(key) != null) {
                 instance.cacheHelper.remove(key);
             }
         }

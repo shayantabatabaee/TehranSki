@@ -3,4 +3,5 @@
     <string name="process_error">Processing error, please try again later</string>
     <string name="retrieve_error">Retrieving error, please try again later</string>
     <string name="logo_description">Snow Forecast Website Logo</string>
+    <string name="play_service_error">update / Enable Google Play Service To Get Notifications</string>
 </resources>
