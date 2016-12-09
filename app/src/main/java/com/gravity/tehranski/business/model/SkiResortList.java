@@ -15,15 +15,14 @@ public class SkiResortList {
     private SkiResortList() {
 
         resortNames = new ArrayList<>();
-
-        resortNames.add("Montafon");
-        resortNames.add("SecretGarden");
-        resortNames.add("Shemshak");
         resortNames.add("Tochal");
+        resortNames.add("Shemshak");
         resortNames.add("Dizin");
         resortNames.add("Darbandsar");
         resortNames.add("Abali");
         resortNames.add("Cochran");
+        resortNames.add("Montafon");
+        resortNames.add("SecretGarden");
 
     }
 

@@ -23,10 +23,6 @@
             android:name=".app.HomeActivity"
             android:theme="@style/AppTheme"/>
 
-        <activity
-            android:name=".app.NotificationActivity"
-            android:theme="@style/AppTheme"/>
-
         <service android:exported="false" android:name=".business.net.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

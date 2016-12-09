@@ -14,6 +14,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.gravity.tehranski.R;
 import com.gravity.tehranski.business.model.SkiResort;
 import com.gravity.tehranski.business.model.SkiResortList;
+import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
@@ -39,8 +40,8 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         initObjects();
 
-        if(!IsPlayServiceAvailable()){
-            Toast.makeText(this,playServiceError,Toast.LENGTH_SHORT).show();
+        if (!IsPlayServiceAvailable()) {
+            Toast.makeText(this, playServiceError, Toast.LENGTH_SHORT).show();
             GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
         }
 
@@ -69,6 +70,9 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
                 page.setScaleY(normalPosition / 5 + 0.8f);
             }
         });
+
+        CirclePageIndicator pageIndicator = (CirclePageIndicator) findViewById(R.id.pageIndicator);
+        pageIndicator.setViewPager(viewPager);
         playServiceError = this.getResources().getString(R.string.play_service_error);
     }
 

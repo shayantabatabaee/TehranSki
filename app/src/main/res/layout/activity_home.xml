@@ -31,12 +31,21 @@
         android:contentDescription="@string/logo_description"
         android:src="@drawable/logo" />
 
+
     <View
+        android:id="@+id/whiteLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@id/logo"
         android:background="@color/colorWhite"
         android:gravity="bottom" />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/pageIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/whiteLine"
+        android:layout_marginBottom="15dp"/>
 
 </RelativeLayout>
 

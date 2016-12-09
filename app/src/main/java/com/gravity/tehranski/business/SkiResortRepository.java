@@ -12,7 +12,7 @@ public class SkiResortRepository {
     private CacheHelper cacheHelper;
     private VolleyHelper volleyHelper;
     private static SkiResortRepository instance;
-    private static String height = "min";
+    private static String height = "mid";
 
     public static SkiResortRepository getInstance(Context context) {
         if (instance == null) {

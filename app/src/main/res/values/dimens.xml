@@ -6,6 +6,8 @@
 
     <dimen name="fragment_horizontal_padding">16dp</dimen>
     <dimen name="fragment_vertical_padding">65dp</dimen>
+    <dimen name="fragment_vertical_padding_bottom">80dp</dimen>
     <dimen name="fragment_topLayout_horizontal_padding">10dp</dimen>
     <dimen name="fragment_topLayout_vertical_padding">20dp</dimen>
+    <dimen name="fragment_landscape_top_padding">20dp</dimen>
 </resources>
