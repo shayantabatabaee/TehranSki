@@ -78,10 +78,8 @@ public class VolleyHelper {
 
     }
 
-    public void CancelAll(String tag) {
-
+    public void cancelRequest(String tag) {
         requestQueue.cancelAll(createUrl(tag));
-        System.out.println("canceled" + tag);
     }
 
     public void clearCache(String key) {
