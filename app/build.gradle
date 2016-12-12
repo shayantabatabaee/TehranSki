@@ -5,17 +5,22 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.Gravity.Tehranski"
+        applicationId "com.Gravity.TehranSki"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 220000
         versionName "2.2.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 }
 
@@ -30,4 +35,3 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
-

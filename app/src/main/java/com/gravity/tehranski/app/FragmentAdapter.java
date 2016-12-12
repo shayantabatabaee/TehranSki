@@ -1,4 +1,4 @@
-package com.Gravity.Tehranski.app;
+package com.Gravity.TehranSki.app;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

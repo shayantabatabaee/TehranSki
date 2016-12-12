@@ -1,6 +1,6 @@
-package com.Gravity.Tehranski.util;
+package com.Gravity.TehranSki.util;
 
-import com.Gravity.Tehranski.business.model.ForeCast;
+import com.Gravity.TehranSki.business.model.ForeCast;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

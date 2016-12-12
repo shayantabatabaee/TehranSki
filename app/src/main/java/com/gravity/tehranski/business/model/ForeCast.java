@@ -1,4 +1,4 @@
-package com.Gravity.Tehranski.business.model;
+package com.Gravity.TehranSki.business.model;
 
 public class ForeCast {
 

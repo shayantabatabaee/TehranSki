@@ -1,4 +1,4 @@
-package com.Gravity.Tehranski.app;
+package com.Gravity.TehranSki.app;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.Gravity.Tehranski.R;
-import com.Gravity.Tehranski.business.SkiResortRepository;
-import com.Gravity.Tehranski.business.model.SkiResort;
+import com.Gravity.TehranSki.R;
+import com.Gravity.TehranSki.business.SkiResortRepository;
+import com.Gravity.TehranSki.business.model.SkiResort;
 
 
 public class SkiResortFragment extends Fragment {

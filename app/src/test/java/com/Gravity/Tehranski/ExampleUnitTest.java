@@ -1,4 +1,4 @@
-package com.Gravity.Tehranski;
+package com.Gravity.TehranSki;
 
 import org.junit.Test;
 

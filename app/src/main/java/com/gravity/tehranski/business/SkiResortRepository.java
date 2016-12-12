@@ -1,10 +1,10 @@
-package com.Gravity.Tehranski.business;
+package com.Gravity.TehranSki.business;
 
 import android.content.Context;
 
-import com.Gravity.Tehranski.business.model.SkiResort;
-import com.Gravity.Tehranski.business.net.VolleyHelper;
-import com.Gravity.Tehranski.business.storage.cache.CacheHelper;
+import com.Gravity.TehranSki.business.model.SkiResort;
+import com.Gravity.TehranSki.business.net.VolleyHelper;
+import com.Gravity.TehranSki.business.storage.cache.CacheHelper;
 
 
 public class SkiResortRepository {
