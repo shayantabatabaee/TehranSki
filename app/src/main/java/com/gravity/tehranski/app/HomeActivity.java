@@ -1,4 +1,4 @@
-package com.gravity.tehranski.app;
+package com.Gravity.Tehranski.app;
 
 import android.os.Bundle;
 import android.support.v4.util.SparseArrayCompat;
@@ -11,9 +11,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.gravity.tehranski.R;
-import com.gravity.tehranski.business.model.SkiResort;
-import com.gravity.tehranski.business.model.SkiResortList;
+import com.Gravity.Tehranski.R;
+import com.Gravity.Tehranski.business.model.SkiResort;
+import com.Gravity.Tehranski.business.model.SkiResortList;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {

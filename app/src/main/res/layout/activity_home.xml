@@ -5,18 +5,13 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".app.HomeActivity">
 
     <View
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 
     <ImageView
@@ -46,6 +41,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/whiteLine"
         android:layout_marginBottom="15dp"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
 

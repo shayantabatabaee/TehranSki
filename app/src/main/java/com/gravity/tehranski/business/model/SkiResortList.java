@@ -1,4 +1,4 @@
-package com.gravity.tehranski.business.model;
+package com.Gravity.Tehranski.business.model;
 
 import java.util.ArrayList;
 
@@ -20,9 +20,6 @@ public class SkiResortList {
         resortNames.add("Dizin");
         resortNames.add("Darbandsar");
         resortNames.add("Abali");
-        resortNames.add("Cochran");
-        resortNames.add("Montafon");
-        resortNames.add("SecretGarden");
 
     }
 

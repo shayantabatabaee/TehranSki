@@ -1,4 +1,4 @@
-package com.gravity.tehranski;
+package com.Gravity.Tehranski;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

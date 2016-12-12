@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gravity.tehranski">
+    package="com.Gravity.Tehranski">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -23,7 +23,7 @@
             android:name=".app.HomeActivity"
             android:theme="@style/AppTheme"/>
 
-        <service android:exported="false" android:name=".business.net.MyFirebaseMessagingService">
+        <service android:exported="false" android:name=".business.net.FCMService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

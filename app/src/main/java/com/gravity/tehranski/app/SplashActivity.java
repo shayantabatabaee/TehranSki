@@ -1,4 +1,4 @@
-package com.gravity.tehranski.app;
+package com.Gravity.Tehranski.app;
 
 import android.content.Intent;
 import android.os.Bundle;

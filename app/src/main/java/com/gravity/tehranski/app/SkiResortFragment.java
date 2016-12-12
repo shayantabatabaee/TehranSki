@@ -1,4 +1,4 @@
-package com.gravity.tehranski.app;
+package com.Gravity.Tehranski.app;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gravity.tehranski.R;
-import com.gravity.tehranski.business.SkiResortRepository;
-import com.gravity.tehranski.business.model.SkiResort;
+import com.Gravity.Tehranski.R;
+import com.Gravity.Tehranski.business.SkiResortRepository;
+import com.Gravity.Tehranski.business.model.SkiResort;
 
 
 public class SkiResortFragment extends Fragment {
@@ -66,6 +66,7 @@ public class SkiResortFragment extends Fragment {
                 refreshLayout.setRefreshing(true);
                 refreshSkiResort(rootView, inflater);
                 refreshLayout.setRefreshing(false);
+                //TODO:Make ScrollView Scroll without refreshing.
 
             }
         });

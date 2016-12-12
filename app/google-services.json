@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1009242325279",
+    "firebase_url": "https://tehranski-2a0fd.firebaseio.com",
+    "project_id": "tehranski-2a0fd",
+    "storage_bucket": "tehranski-2a0fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009242325279:android:c79eca5b48fb9eef",
+        "android_client_info": {
+          "package_name": "com.Gravity.Tehranski"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009242325279-oj6oop2jshi72shha9frvlmfndb8aq49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDckwYl3ffu0eah4dSzslDLlrKiJSrQmws"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

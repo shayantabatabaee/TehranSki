@@ -1,4 +1,4 @@
-package com.gravity.tehranski.business.net;
+package com.Gravity.Tehranski.business.net;
 
 import android.content.Context;
 
@@ -8,10 +8,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.gravity.tehranski.R;
-import com.gravity.tehranski.business.model.ForeCast;
-import com.gravity.tehranski.business.model.SkiResort;
-import com.gravity.tehranski.util.XmlParser;
+import com.Gravity.Tehranski.R;
+import com.Gravity.Tehranski.business.model.ForeCast;
+import com.Gravity.Tehranski.business.model.SkiResort;
+import com.Gravity.Tehranski.util.XmlParser;
 
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
