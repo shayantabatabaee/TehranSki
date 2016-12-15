@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refreshLayout"
+    android:layoutDirection="ltr"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,9 +12,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/fragment_vertical_padding_bottom"
+            android:paddingBottom="32dp"
             android:paddingLeft="@dimen/fragment_horizontal_padding"
             android:paddingRight="@dimen/fragment_horizontal_padding"
             android:paddingTop="@dimen/fragment_vertical_padding">
@@ -30,7 +31,35 @@
                     style="@style/Widget.AppCompat.ProgressBar"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
-                    android:indeterminateTint="@color/colorWhite" />
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorWhite"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/failureLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/failureText"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center" />
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_refresh"/>
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pull_to_refresh"
+                    android:textAlignment="center" />
             </LinearLayout>
 
             <LinearLayout

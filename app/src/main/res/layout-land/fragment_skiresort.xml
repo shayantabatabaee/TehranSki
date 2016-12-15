@@ -3,7 +3,8 @@
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr">
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -235,6 +236,35 @@
                     android:layout_height="85dp"
                     android:indeterminateTint="@color/colorWhite" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/failureLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/failureText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_refresh" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pull_to_refresh"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
             </LinearLayout>
 
 

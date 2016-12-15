@@ -9,11 +9,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.Gravity.TehranSki.R;
 import com.Gravity.TehranSki.business.model.SkiResort;
 import com.Gravity.TehranSki.business.model.SkiResortList;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
@@ -74,6 +74,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         CirclePageIndicator pageIndicator = (CirclePageIndicator) findViewById(R.id.pageIndicator);
         pageIndicator.setViewPager(viewPager);
         playServiceError = this.getResources().getString(R.string.play_service_error);
+
     }
 
     private boolean IsPlayServiceAvailable() {

@@ -85,7 +85,10 @@ public class SkiResortFragment extends Fragment {
 
             @Override
             public void OnFailure(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                TextView failureText = (TextView) rootView.findViewById(R.id.failureText);
+                failureText.setText(message);
+                rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
+                rootView.findViewById(R.id.failureLayout).setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -171,5 +174,6 @@ public class SkiResortFragment extends Fragment {
         rootView.findViewById(R.id.fragmentTopLayout).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.BottomLayout).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
+        rootView.findViewById(R.id.failureLayout).setVisibility(View.GONE);
     }
 }

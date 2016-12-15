@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#5E99C3</color>
+    <color name="colorAccent">#FFC107</color>
+    <color name="colorPrimaryDark">#616161</color>
+
     <color name="colorTransparent">#005E99C3</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorSplashScreen">#5E99C3</color>
+    <color name="colorBackground">#5E99C3</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorTopFragment">#4FFFFFFF</color>
     <color name="colorText">#FFFFFF</color>
