@@ -1,4 +1,4 @@
-package com.Gravity.TehranSki.app;
+package com.Gravity.TehranSki.app.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,11 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Gravity.TehranSki.R;
-import com.Gravity.TehranSki.business.SkiResortRepository;
 import com.Gravity.TehranSki.business.model.SkiResort;
 
 
-public class SkiResortFragment extends Fragment {
+public class SkiResortFragment extends Fragment implements FragmentContract.Fragment {
 
     // constant objects
     private static final String ARG_RESORT_NAME = "ARG_RESORT_NAME";
@@ -25,10 +24,10 @@ public class SkiResortFragment extends Fragment {
 
     // data objects
     private String resortName;
-    private int position;
+    protected int position;
 
-    // repository objects
-    private SkiResortRepository skiResortRepository;
+    //presenter object
+    private FragmentContract.Presenter presenter;
 
     public SkiResortFragment() {
         // it is necessary
@@ -48,7 +47,7 @@ public class SkiResortFragment extends Fragment {
         super.onCreate(savedInstanceState);
         resortName = getArguments().getString(ARG_RESORT_NAME);
         position = getArguments().getInt(ARG_POSITION);
-        skiResortRepository = SkiResortRepository.getInstance(getContext());
+        presenter = new FragmentPresenter(this, getContext());
     }
 
     @Nullable
@@ -56,17 +55,15 @@ public class SkiResortFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_skiresort, container, false);
 
-        getSkiResort(rootView, inflater);
+        presenter.getSkiResort(rootView, inflater, resortName);
 
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //TODO:Change rootView Style During Request.
                 refreshLayout.setRefreshing(true);
-                refreshSkiResort(rootView, inflater);
+                presenter.refreshSkiResort(rootView, inflater, resortName);
                 refreshLayout.setRefreshing(false);
-                //TODO:Make ScrollView Scroll without refreshing.
 
             }
         });
@@ -75,56 +72,7 @@ public class SkiResortFragment extends Fragment {
 
     }
 
-    public void getSkiResort(final View rootView, final LayoutInflater inflater) {
-        skiResortRepository.getSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
-            @Override
-            public void OnSuccess(SkiResort skiResort) {
-                displayData(skiResort, rootView, inflater);
-                setActivityBackground(skiResort);
-            }
-
-            @Override
-            public void OnFailure(String message) {
-                TextView failureText = (TextView) rootView.findViewById(R.id.failureText);
-                failureText.setText(message);
-                rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
-                rootView.findViewById(R.id.failureLayout).setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void OnCached(SkiResort skiResort) {
-                displayData(skiResort, rootView, inflater);
-                setActivityBackground(skiResort);
-            }
-        });
-    }
-
-    public void refreshSkiResort(final View rootView, final LayoutInflater inflater) {
-        skiResortRepository.refreshSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
-            @Override
-            public void OnSuccess(SkiResort skiresort) {
-                displayData(skiresort, rootView, inflater);
-                setActivityBackground(skiresort);
-            }
-
-            @Override
-            public void OnFailure(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void OnCached(SkiResort skiResort) {
-            }
-        });
-    }
-
-
-    private void setActivityBackground(SkiResort skiResort) {
-        if (getActivity() instanceof HomeActivity) {
-            ((HomeActivity) getActivity()).setBackground(skiResort, position);
-        }
-    }
-
+    @Override
     public void displayData(SkiResort skiResort, View rootView, LayoutInflater inflater) {
         if (getActivity() == null) {
             // the fragment is not attached to any activity. so there is no need to show the data
@@ -175,5 +123,18 @@ public class SkiResortFragment extends Fragment {
         rootView.findViewById(R.id.BottomLayout).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
         rootView.findViewById(R.id.failureLayout).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showOnFailureMessage(String message, View rootView) {
+        TextView failureText = (TextView) rootView.findViewById(R.id.failureText);
+        failureText.setText(message);
+        rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
+        rootView.findViewById(R.id.failureLayout).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showOnFailureToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name="com.Gravity.TehranSki.app.HomeActivity"
+            android:name="com.Gravity.TehranSki.app.home.HomeActivity"
             android:theme="@style/AppTheme"/>
 
         <service android:exported="false" android:name="com.Gravity.TehranSki.business.net.FCMService">
