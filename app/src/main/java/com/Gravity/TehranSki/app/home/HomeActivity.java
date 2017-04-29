@@ -45,7 +45,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
         }
 
-
     }
 
     private void findViews() {
