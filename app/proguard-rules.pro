@@ -16,3 +16,4 @@
 #   public *;
 #}
 -dontwarn com.viewpagerindicator.**
+-dontwarn com.google.firebase.**
