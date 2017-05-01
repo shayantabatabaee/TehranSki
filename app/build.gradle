@@ -15,8 +15,8 @@ android {
         applicationId "com.Gravity.TehranSki"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 221000
-        versionName "2.2.1"
+        versionCode 222000
+        versionName "2.2.2"
         signingConfig signingConfigs.config
     }
     buildTypes {
