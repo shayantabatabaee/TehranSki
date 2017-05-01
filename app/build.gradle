@@ -39,6 +39,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-base:10.2.1'
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -8,6 +8,8 @@ import com.Gravity.TehranSki.app.home.HomeActivity;
 import com.Gravity.TehranSki.business.SkiResortRepository;
 import com.Gravity.TehranSki.business.model.SkiResort;
 
+import java.lang.ref.WeakReference;
+
 public class FragmentPresenter implements FragmentContract.Presenter {
 
     //view objects
@@ -23,12 +25,12 @@ public class FragmentPresenter implements FragmentContract.Presenter {
     }
 
     @Override
-    public void getSkiResort(final View rootView, final LayoutInflater inflater, String resortName) {
+    public void getSkiResort(final WeakReference<View> rootView, String resortName) {
 
         skiResortRepository.getSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
             @Override
             public void OnSuccess(SkiResort skiResort) {
-                fragment.displayData(skiResort, rootView, inflater);
+                fragment.displayData(skiResort, rootView);
                 setActivityBackground(skiResort);
             }
 
@@ -39,7 +41,7 @@ public class FragmentPresenter implements FragmentContract.Presenter {
 
             @Override
             public void OnCached(SkiResort skiResort) {
-                fragment.displayData(skiResort, rootView, inflater);
+                fragment.displayData(skiResort, rootView);
                 setActivityBackground(skiResort);
             }
         });
@@ -47,11 +49,11 @@ public class FragmentPresenter implements FragmentContract.Presenter {
     }
 
     @Override
-    public void refreshSkiResort(final View rootView, final LayoutInflater inflater, String resortName) {
+    public void refreshSkiResort(final WeakReference<View> rootView, String resortName) {
         skiResortRepository.refreshSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
             @Override
             public void OnSuccess(SkiResort skiresort) {
-                fragment.displayData(skiresort, rootView, inflater);
+                fragment.displayData(skiresort, rootView);
                 setActivityBackground(skiresort);
             }
 

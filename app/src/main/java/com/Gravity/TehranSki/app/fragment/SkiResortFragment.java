@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.Gravity.TehranSki.R;
 import com.Gravity.TehranSki.business.model.SkiResort;
 
+import java.lang.ref.WeakReference;
+
 
 public class SkiResortFragment extends Fragment implements FragmentContract.Fragment {
 
@@ -25,6 +27,7 @@ public class SkiResortFragment extends Fragment implements FragmentContract.Frag
     // data objects
     private String resortName;
     protected int position;
+    private LayoutInflater mInflater;
 
     //presenter object
     private FragmentContract.Presenter presenter;
@@ -50,19 +53,28 @@ public class SkiResortFragment extends Fragment implements FragmentContract.Frag
         presenter = new FragmentPresenter(this, getContext());
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mInflater = null;
+    }
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_skiresort, container, false);
 
-        presenter.getSkiResort(rootView, inflater, resortName);
+        final WeakReference<View> weakRootView = new WeakReference<>(rootView);
+        this.mInflater = inflater;
+
+        presenter.getSkiResort(weakRootView, resortName);
 
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
-                presenter.refreshSkiResort(rootView, inflater, resortName);
+                presenter.refreshSkiResort(weakRootView, resortName);
                 refreshLayout.setRefreshing(false);
 
             }
@@ -73,11 +85,13 @@ public class SkiResortFragment extends Fragment implements FragmentContract.Frag
     }
 
     @Override
-    public void displayData(SkiResort skiResort, View rootView, LayoutInflater inflater) {
+    public void displayData(SkiResort skiResort, WeakReference<View> weakRootView) {
         if (getActivity() == null) {
             // the fragment is not attached to any activity. so there is no need to show the data
             return;
         }
+
+        View rootView = weakRootView.get();
 
         TextView ResortName = (TextView) rootView.findViewById(R.id.resortName);
         ImageView CurrentConditionImg = (ImageView) rootView.findViewById(R.id.CurrentConditionImg);
@@ -103,7 +117,7 @@ public class SkiResortFragment extends Fragment implements FragmentContract.Frag
         LinearLayout bottomLayout = (LinearLayout) rootView.findViewById(R.id.BottomLayout);
         bottomLayout.removeAllViews();
         for (int i = 1; i < skiResort.getForecasts().size(); i++) {
-            bottomView = inflater.inflate(R.layout.fragment_bottom, bottomLayout, false);
+            bottomView = mInflater.inflate(R.layout.fragment_bottom, bottomLayout, false);
             TextView dayName = (TextView) bottomView.findViewById(R.id.dayName);
             ImageView bottomImage = (ImageView) bottomView.findViewById(R.id.BottomImage);
             TextView bottomSnowText = (TextView) bottomView.findViewById(R.id.BottomSnowText);
@@ -126,7 +140,10 @@ public class SkiResortFragment extends Fragment implements FragmentContract.Frag
     }
 
     @Override
-    public void showOnFailureMessage(String message, View rootView) {
+    public void showOnFailureMessage(String message, WeakReference<View> weakRootView) {
+
+        View rootView = weakRootView.get();
+
         TextView failureText = (TextView) rootView.findViewById(R.id.failureText);
         failureText.setText(message);
         rootView.findViewById(R.id.progressBar).setVisibility(View.GONE);
