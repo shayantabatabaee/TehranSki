@@ -1,4 +1,4 @@
-package com.Gravity.TehranSki.app.fragment;
+package com.Gravity.TehranSki.app.home.skiresort;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,11 +6,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
-public class FragmentAdapter extends FragmentStatePagerAdapter {
+public class SkiResortAdapter extends FragmentStatePagerAdapter {
 
     private ArrayList<String> resortNames;
 
-    public FragmentAdapter(FragmentManager fm, ArrayList<String> resortNames) {
+    public SkiResortAdapter(FragmentManager fm, ArrayList<String> resortNames) {
         super(fm);
         this.resortNames = resortNames;
     }

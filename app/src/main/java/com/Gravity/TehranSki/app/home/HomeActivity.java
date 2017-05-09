@@ -1,6 +1,7 @@
 package com.Gravity.TehranSki.app.home;
 
 import android.os.Bundle;
+import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,13 +10,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.Gravity.TehranSki.R;
-import com.Gravity.TehranSki.app.fragment.FragmentAdapter;
+import com.Gravity.TehranSki.app.home.skiresort.SkiResortAdapter;
+import com.Gravity.TehranSki.business.model.SkiResort;
 import com.Gravity.TehranSki.business.model.SkiResortList;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.viewpagerindicator.CirclePageIndicator;
 
-public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, HomeContract.HomeActivity {
+public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     // layout Objects
     private View background;
@@ -23,13 +25,12 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     // data Objects
     private String currentBackground;
+    private int currentPosition;
+    private SparseArrayCompat<SkiResort> skiResortHashMap;
     private String playServiceError;
 
-    //presenter object
-    public HomeContract.HomePresenter homePresenter;
-
     //adapter object
-    FragmentAdapter adapter;
+    SkiResortAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
         }
 
+
     }
 
     private void findViews() {
@@ -53,12 +55,11 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     private void initObjects() {
+        currentPosition = 0;
         currentBackground = "";
+        skiResortHashMap = new SparseArrayCompat<>();
 
-        homePresenter = new HomePresenter(this);
-        homePresenter.setCurrentPosition(0);
-
-        adapter = new FragmentAdapter(getSupportFragmentManager(), SkiResortList.getInstance().getResortsName());
+        adapter = new SkiResortAdapter(getSupportFragmentManager(), SkiResortList.getInstance().getResortsName());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
 
@@ -77,14 +78,32 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     }
 
-    @Override
-    public void setActivityBackground(String presenterBackground) {
+    private boolean IsPlayServiceAvailable() {
+        int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            return false;
+        } else
+            return true;
+    }
 
-        if (currentBackground.equals(presenterBackground)) {
+    public void setBackground(final SkiResort skiResort, int position) {
+        skiResortHashMap.put(position, skiResort);
+
+        setBackground();
+    }
+
+    private void setBackground() {
+        final SkiResort skiResort = skiResortHashMap.get(currentPosition);
+
+        if (skiResort == null) {
             return;
         }
-        currentBackground = presenterBackground;
-        background.setBackgroundResource(getResources().getIdentifier(currentBackground
+
+        if (currentBackground.equals(skiResort.getForecasts().get(0).get_plcname())) {
+            return;
+        }
+        currentBackground = skiResort.getForecasts().get(0).get_plcname();
+        background.setBackgroundResource(getResources().getIdentifier(skiResort.getForecasts().get(0).get_plcname()
                 , "drawable", this.getPackageName()));
 
         Animation FadeIn = AnimationUtils.loadAnimation(this, R.anim.fadein);
@@ -98,7 +117,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                findViewById(R.id.mainLayout).setBackgroundResource(getResources().getIdentifier(currentBackground
+                findViewById(R.id.mainLayout).setBackgroundResource(getResources().getIdentifier(skiResort.getForecasts().get(0).get_plcname()
                         , "drawable", getPackageName()));
             }
 
@@ -107,16 +126,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             }
         });
-
-    }
-
-
-    private boolean IsPlayServiceAvailable() {
-        int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            return false;
-        } else
-            return true;
     }
 
     @Override
@@ -126,8 +135,8 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onPageSelected(int position) {
-        homePresenter.setCurrentPosition(position);
-        homePresenter.setBackground();
+        currentPosition = position;
+        setBackground();
     }
 
     @Override
