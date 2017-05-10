@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:name=".app.TehranSkiApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +12,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.gravity.tehranski.app.SplashActivity"
+            android:name="com.gravity.tehranski.app.ui.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +21,7 @@
         </activity>
 
         <activity
-            android:name="com.gravity.tehranski.app.home.HomeActivity"
+            android:name=".app.ui.home.HomeActivity"
             android:theme="@style/AppTheme" />
 
         <service

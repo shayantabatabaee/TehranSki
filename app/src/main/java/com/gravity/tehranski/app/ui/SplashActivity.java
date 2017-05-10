@@ -1,11 +1,11 @@
-package com.gravity.tehranski.app;
+package com.gravity.tehranski.app.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import com.gravity.tehranski.app.home.HomeActivity;
+import com.gravity.tehranski.app.ui.home.HomeActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

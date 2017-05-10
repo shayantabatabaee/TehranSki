@@ -1,4 +1,4 @@
-package com.gravity.tehranski.app.home.skiresort;
+package com.gravity.tehranski.app.ui.home.skiresort;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,8 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gravity.tehranski.R;
-import com.gravity.tehranski.app.home.HomeActivity;
+import com.gravity.tehranski.app.TehranSkiApplication;
+import com.gravity.tehranski.app.ui.home.HomeActivity;
 import com.gravity.tehranski.business.model.SkiResort;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +29,10 @@ import static com.gravity.tehranski.R.id.CurrentTemp;
 
 public class SkiResortFragment extends Fragment implements SkiResortContract.View {
 
+    //Injection
+    @Inject
+    SkiResortContract.Presenter presenter;
+
     // constant objects
     private static final String ARG_RESORT_NAME = "ARG_RESORT_NAME";
     private static final String ARG_POSITION = "ARG_POSITION";
@@ -34,9 +41,6 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
     private String resortName;
     protected int position;
     private LayoutInflater mInflater;
-
-    //presenter object
-    private SkiResortContract.Presenter presenter;
 
     //Butter Knife Layout Objects
     Unbinder unbinder;
@@ -84,17 +88,20 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((TehranSkiApplication) getActivity().getApplication()).getAppComponent().inject(this);
+
         resortName = getArguments().getString(ARG_RESORT_NAME);
         position = getArguments().getInt(ARG_POSITION);
-        presenter = new SkiResortPresenter(this, getContext());
+        presenter.attachView(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        presenter.detachView();
         mInflater = null;
         unbinder.unbind();
-
     }
 
     @Nullable

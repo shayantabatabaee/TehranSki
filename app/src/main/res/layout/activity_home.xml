@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:layoutDirection="ltr"
-    tools:context=".app.home.HomeActivity">
+    tools:context=".app.ui.home.HomeActivity">
 
     <View
         android:id="@+id/background"

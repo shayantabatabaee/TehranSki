@@ -1,6 +1,4 @@
-package com.gravity.tehranski.app.home.skiresort;
-
-import android.content.Context;
+package com.gravity.tehranski.app.ui.home.skiresort;
 
 import com.gravity.tehranski.business.SkiResortRepository;
 import com.gravity.tehranski.business.model.SkiResort;
@@ -14,9 +12,19 @@ public class SkiResortPresenter implements SkiResortContract.Presenter {
     private SkiResortRepository skiResortRepository;
 
 
-    public SkiResortPresenter(SkiResortFragment skiResortFragment, Context context) {
+    public SkiResortPresenter() {
+        //skiResortRepository = SkiResortRepository.getInstance(context);
+    }
+
+    @Override
+    public void attachView(SkiResortFragment skiResortFragment) {
+        //TODO:Null check of View
         this.view = skiResortFragment;
-        skiResortRepository = SkiResortRepository.getInstance(context);
+    }
+
+    @Override
+    public void detachView() {
+        this.view = null;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.gravity.tehranski.app.home;
+package com.gravity.tehranski.app.ui.home;
 
 import android.os.Bundle;
 import android.support.v4.util.SparseArrayCompat;
@@ -9,12 +9,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import com.gravity.tehranski.R;
-import com.gravity.tehranski.app.home.skiresort.SkiResortAdapter;
-import com.gravity.tehranski.business.model.SkiResort;
-import com.gravity.tehranski.business.model.SkiResortList;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.gravity.tehranski.R;
+import com.gravity.tehranski.app.ui.home.skiresort.SkiResortAdapter;
+import com.gravity.tehranski.business.model.SkiResort;
+import com.gravity.tehranski.business.model.SkiResortList;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.BindView;
@@ -49,7 +49,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             Toast.makeText(this, playServiceError, Toast.LENGTH_SHORT).show();
             GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
         }
-
     }
 
     private void initObjects() {

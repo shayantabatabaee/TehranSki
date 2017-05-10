@@ -1,4 +1,4 @@
-package com.gravity.tehranski.app.home.skiresort;
+package com.gravity.tehranski.app.ui.home.skiresort;
 
 import com.gravity.tehranski.business.model.SkiResort;
 
@@ -22,6 +22,10 @@ public interface SkiResortContract {
         void getSkiResort(String resortName);
 
         void refreshSkiResort(String resortName);
+
+        void attachView(SkiResortFragment skiResortFragment);
+
+        void detachView();
 
     }
 }
