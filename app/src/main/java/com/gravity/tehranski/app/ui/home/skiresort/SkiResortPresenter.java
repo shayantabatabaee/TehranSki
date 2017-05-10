@@ -24,7 +24,6 @@ public class SkiResortPresenter implements SkiResortContract.Presenter {
 
     @Override
     public void attachView(SkiResortFragment skiResortFragment) {
-        //TODO:Null check of View
         this.view = skiResortFragment;
     }
 
@@ -39,19 +38,25 @@ public class SkiResortPresenter implements SkiResortContract.Presenter {
         skiResortRepository.getSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
             @Override
             public void OnSuccess(SkiResort skiResort) {
-                view.displayData(skiResort);
-                view.setActivityBackground(skiResort);
+                if (view != null) {
+                    view.displayData(skiResort);
+                    view.setActivityBackground(skiResort);
+                }
             }
 
             @Override
             public void OnFailure(String message) {
-                view.showOnFailureMessage(message);
+                if (view != null) {
+                    view.showOnFailureMessage(message);
+                }
             }
 
             @Override
             public void OnCached(SkiResort skiResort) {
-                view.displayData(skiResort);
-                view.setActivityBackground(skiResort);
+                if (view != null) {
+                    view.displayData(skiResort);
+                    view.setActivityBackground(skiResort);
+                }
             }
         });
 
@@ -62,13 +67,18 @@ public class SkiResortPresenter implements SkiResortContract.Presenter {
         skiResortRepository.refreshSkiResort(resortName, new SkiResortRepository.SkiResortListener() {
             @Override
             public void OnSuccess(SkiResort skiresort) {
-                view.displayData(skiresort);
-                view.setActivityBackground(skiresort);
+                if (view != null) {
+                    view.displayData(skiresort);
+                    view.setActivityBackground(skiresort);
+                }
+
             }
 
             @Override
             public void OnFailure(String message) {
-                view.showError(message);
+                if (view != null) {
+                    view.showError(message);
+                }
             }
 
             @Override

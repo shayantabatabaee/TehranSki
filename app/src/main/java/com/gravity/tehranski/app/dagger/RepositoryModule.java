@@ -1,5 +1,6 @@
 package com.gravity.tehranski.app.dagger;
 
+import android.app.ActivityManager;
 import android.content.Context;
 
 import com.gravity.tehranski.business.SkiResortRepository;
@@ -17,13 +18,16 @@ public class RepositoryModule {
     @Singleton
     @Provides
     SkiResortRepository provideSkiResortRepository(Context context) {
-        return SkiResortRepository.getInstance(context);
+        return new SkiResortRepository(context);
     }
 
     @Singleton
     @Provides
     CacheHelper provideCacheHelper(Context context) {
-        return CacheHelper.getInstance(context);
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        int availableMemoryInBytes = activityManager.getMemoryClass() * 1024 * 1024;
+        int maxSize = availableMemoryInBytes / 16;
+        return new CacheHelper(maxSize);
     }
 
     @Provides

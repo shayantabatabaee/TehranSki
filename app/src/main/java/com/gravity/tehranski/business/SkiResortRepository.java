@@ -16,17 +16,10 @@ public class SkiResortRepository {
     @Inject
     VolleyHelper volleyHelper;
 
-    private static SkiResortRepository instance;
+
     private static String height = "mid";
 
-    public static SkiResortRepository getInstance(Context context) {
-        if (instance == null) {
-            instance = new SkiResortRepository(context);
-        }
-        return instance;
-    }
-
-    private SkiResortRepository(Context context) {
+    public SkiResortRepository(Context context) {
         ((TehranSkiApplication) context.getApplicationContext()).getAppComponent().inject(this);
     }
 
@@ -66,13 +59,13 @@ public class SkiResortRepository {
         });
     }
 
-    public static void clearCache(String key) {
+   /* public static void clearCache(String key) {
         if (instance != null) {
             if (instance.cacheHelper.get(key) != null) {
                 instance.cacheHelper.remove(key);
             }
         }
-    }
+    }*/
 
     public interface SkiResortListener {
 
