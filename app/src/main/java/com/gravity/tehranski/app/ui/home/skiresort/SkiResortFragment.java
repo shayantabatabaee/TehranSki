@@ -29,9 +29,6 @@ import static com.gravity.tehranski.R.id.CurrentTemp;
 
 public class SkiResortFragment extends Fragment implements SkiResortContract.View {
 
-    //Injection
-    @Inject
-    SkiResortContract.Presenter presenter;
 
     // constant objects
     private static final String ARG_RESORT_NAME = "ARG_RESORT_NAME";
@@ -71,9 +68,13 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
     @BindView(R.id.fragmentTopLayout)
     LinearLayout fragmentTopLayout;
 
+    //Injection
+    @Inject
+    SkiResortContract.Presenter presenter;
 
     public SkiResortFragment() {
         // it is necessary
+
     }
 
     public static SkiResortFragment newInstance(String skiResortName, int position) {
@@ -88,12 +89,9 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ((TehranSkiApplication) getActivity().getApplication()).getAppComponent().inject(this);
-
         resortName = getArguments().getString(ARG_RESORT_NAME);
         position = getArguments().getInt(ARG_POSITION);
-        presenter.attachView(this);
+        ((TehranSkiApplication) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     @Override
@@ -110,8 +108,8 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
         final View rootView = inflater.inflate(R.layout.fragment_skiresort, container, false);
 
         this.mInflater = inflater;
-
         unbinder = ButterKnife.bind(this, rootView);
+        presenter.attachView(this);
 
         presenter.getSkiResort(resortName);
 
@@ -129,6 +127,7 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
         return rootView;
 
     }
+
 
     @Override
     public void displayData(SkiResort skiResort) {

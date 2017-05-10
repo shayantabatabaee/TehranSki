@@ -6,6 +6,7 @@ import com.gravity.tehranski.app.dagger.AppComponent;
 import com.gravity.tehranski.app.dagger.AppModule;
 import com.gravity.tehranski.app.dagger.DaggerAppComponent;
 
+
 public class TehranSkiApplication extends Application {
 
     private AppComponent appComponent;
