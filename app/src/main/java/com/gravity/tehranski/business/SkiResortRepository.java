@@ -2,15 +2,20 @@ package com.gravity.tehranski.business;
 
 import android.content.Context;
 
+import com.gravity.tehranski.app.TehranSkiApplication;
 import com.gravity.tehranski.business.model.SkiResort;
 import com.gravity.tehranski.business.net.VolleyHelper;
 import com.gravity.tehranski.business.storage.cache.CacheHelper;
 
+import javax.inject.Inject;
+
 
 public class SkiResortRepository {
+    @Inject
+    CacheHelper cacheHelper;
+    @Inject
+    VolleyHelper volleyHelper;
 
-    private CacheHelper cacheHelper;
-    private VolleyHelper volleyHelper;
     private static SkiResortRepository instance;
     private static String height = "mid";
 
@@ -22,8 +27,7 @@ public class SkiResortRepository {
     }
 
     private SkiResortRepository(Context context) {
-        cacheHelper = CacheHelper.getInstance(context);
-        volleyHelper = new VolleyHelper(context);
+        ((TehranSkiApplication) context.getApplicationContext()).getAppComponent().inject(this);
     }
 
     public void getSkiResort(final String key, final SkiResortListener listener) {

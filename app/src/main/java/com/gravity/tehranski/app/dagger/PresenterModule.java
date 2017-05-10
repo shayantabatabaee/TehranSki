@@ -12,7 +12,6 @@ import dagger.Provides;
 @Module
 public class PresenterModule {
 
-
     @Provides
     SkiResortContract.Presenter provideSkiResortPresenter(Context context) {
         return new SkiResortPresenter(context);

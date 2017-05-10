@@ -2,8 +2,11 @@ package com.gravity.tehranski.app.ui.home.skiresort;
 
 import android.content.Context;
 
+import com.gravity.tehranski.app.TehranSkiApplication;
 import com.gravity.tehranski.business.SkiResortRepository;
 import com.gravity.tehranski.business.model.SkiResort;
+
+import javax.inject.Inject;
 
 public class SkiResortPresenter implements SkiResortContract.Presenter {
 
@@ -11,12 +14,12 @@ public class SkiResortPresenter implements SkiResortContract.Presenter {
     private SkiResortContract.View view;
 
     // repository objects
-    private SkiResortRepository skiResortRepository;
+    @Inject
+    SkiResortRepository skiResortRepository;
 
 
     public SkiResortPresenter(Context context) {
-//        ((TehranSkiApplication) context).getAppComponent().inject(this);
-        skiResortRepository = SkiResortRepository.getInstance(context);
+        ((TehranSkiApplication) context).getAppComponent().inject(this);
     }
 
     @Override
