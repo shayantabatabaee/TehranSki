@@ -1,4 +1,4 @@
-package com.Gravity.TehranSki.app.home.skiresort;
+package com.gravity.tehranski.app.home.skiresort;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +12,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.Gravity.TehranSki.R;
-import com.Gravity.TehranSki.app.home.HomeActivity;
-import com.Gravity.TehranSki.business.model.SkiResort;
+import com.gravity.tehranski.R;
+import com.gravity.tehranski.app.home.HomeActivity;
+import com.gravity.tehranski.business.model.SkiResort;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+import static com.gravity.tehranski.R.id.CurrentConditionImg;
+import static com.gravity.tehranski.R.id.CurrentTemp;
 
 
 public class SkiResortFragment extends Fragment implements SkiResortContract.View {
@@ -27,10 +34,39 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
     private String resortName;
     protected int position;
     private LayoutInflater mInflater;
-    private View mRootVIew;
 
     //presenter object
     private SkiResortContract.Presenter presenter;
+
+    //Butter Knife Layout Objects
+    Unbinder unbinder;
+    @BindView(R.id.resortName)
+    TextView resortNameText;
+    @BindView(CurrentConditionImg)
+    ImageView currentConditionImg;
+    @BindView(CurrentTemp)
+    TextView currentTemp;
+    @BindView(R.id.minTemp)
+    TextView minTemp;
+    @BindView(R.id.maxTemp)
+    TextView maxTemp;
+    @BindView(R.id.snow)
+    TextView snow;
+    @BindView(R.id.rain)
+    TextView rain;
+    @BindView(R.id.wind)
+    TextView wind;
+    @BindView(R.id.BottomLayout)
+    LinearLayout bottomLayout;
+    @BindView(R.id.failureText)
+    TextView failureText;
+    @BindView(R.id.failureLayout)
+    LinearLayout failureLayout;
+    @BindView(R.id.progressBar)
+    LinearLayout progressBar;
+    @BindView(R.id.fragmentTopLayout)
+    LinearLayout fragmentTopLayout;
+
 
     public SkiResortFragment() {
         // it is necessary
@@ -57,7 +93,8 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
     public void onDestroy() {
         super.onDestroy();
         mInflater = null;
-        mRootVIew = null;
+        unbinder.unbind();
+
     }
 
     @Nullable
@@ -66,7 +103,8 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
         final View rootView = inflater.inflate(R.layout.fragment_skiresort, container, false);
 
         this.mInflater = inflater;
-        this.mRootVIew = rootView;
+
+        unbinder = ButterKnife.bind(this, rootView);
 
         presenter.getSkiResort(resortName);
 
@@ -92,35 +130,25 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
             return;
         }
 
-        TextView ResortName = (TextView) mRootVIew.findViewById(R.id.resortName);
-        ImageView CurrentConditionImg = (ImageView) mRootVIew.findViewById(R.id.CurrentConditionImg);
-        TextView CurrentTemp = (TextView) mRootVIew.findViewById(R.id.CurrentTemp);
-        TextView MinTemp = (TextView) mRootVIew.findViewById(R.id.minTemp);
-        TextView MaxTemp = (TextView) mRootVIew.findViewById(R.id.maxTemp);
-        TextView Snow = (TextView) mRootVIew.findViewById(R.id.snow);
-        TextView Rain = (TextView) mRootVIew.findViewById(R.id.rain);
-        TextView Wind = (TextView) mRootVIew.findViewById(R.id.wind);
-
-        ResortName.setText(skiResort.getResortName());
-        CurrentConditionImg.setImageResource(getResources().getIdentifier(skiResort.getForecasts().get(0).get_psymbol()
+        resortNameText.setText(skiResort.getResortName());
+        currentConditionImg.setImageResource(getResources().getIdentifier(skiResort.getForecasts().get(0).get_psymbol()
                 , "drawable", getContext().getPackageName()));
-        CurrentTemp.setText(skiResort.getForecasts().get(0).get_pminchill());
-        MinTemp.setText(skiResort.getForecasts().get(0).get_pmin() + " °C");
-        MaxTemp.setText(skiResort.getForecasts().get(0).get_pmax() + " °C");
-        Snow.setText(skiResort.getForecasts().get(0).get_psnow());
-        Rain.setText(skiResort.getForecasts().get(0).get_pprec());
-        Wind.setText(skiResort.getForecasts().get(0).get_pwsymbol());
+        currentTemp.setText(skiResort.getForecasts().get(0).get_pminchill());
+        minTemp.setText(skiResort.getForecasts().get(0).get_pmin() + " °C");
+        maxTemp.setText(skiResort.getForecasts().get(0).get_pmax() + " °C");
+        snow.setText(skiResort.getForecasts().get(0).get_psnow());
+        rain.setText(skiResort.getForecasts().get(0).get_pprec());
+        wind.setText(skiResort.getForecasts().get(0).get_pwsymbol());
 
         android.view.View bottomView;
 
-        LinearLayout bottomLayout = (LinearLayout) mRootVIew.findViewById(R.id.BottomLayout);
         bottomLayout.removeAllViews();
         for (int i = 1; i < skiResort.getForecasts().size(); i++) {
             bottomView = mInflater.inflate(R.layout.fragment_bottom, bottomLayout, false);
-            TextView dayName = (TextView) bottomView.findViewById(R.id.dayName);
-            ImageView bottomImage = (ImageView) bottomView.findViewById(R.id.BottomImage);
-            TextView bottomSnowText = (TextView) bottomView.findViewById(R.id.BottomSnowText);
-            TextView bottomMinMaxTemp = (TextView) bottomView.findViewById(R.id.MinMaxBottomTemp);
+            TextView dayName = ButterKnife.findById(bottomView, R.id.dayName);
+            ImageView bottomImage = ButterKnife.findById(bottomView, R.id.BottomImage);
+            TextView bottomSnowText = ButterKnife.findById(bottomView, R.id.BottomSnowText);
+            TextView bottomMinMaxTemp = ButterKnife.findById(bottomView, R.id.MinMaxBottomTemp);
             dayName.setText(skiResort.getForecasts().get(i).get_pdayname());
             bottomImage.setImageResource(getResources().getIdentifier(skiResort.getForecasts().get(i).get_psymbol()
                     , "drawable", getContext().getPackageName()));
@@ -132,19 +160,17 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
             bottomLayout.addView(bottomView);
         }
 
-        mRootVIew.findViewById(R.id.fragmentTopLayout).setVisibility(android.view.View.VISIBLE);
-        mRootVIew.findViewById(R.id.BottomLayout).setVisibility(android.view.View.VISIBLE);
-        mRootVIew.findViewById(R.id.progressBar).setVisibility(android.view.View.GONE);
-        mRootVIew.findViewById(R.id.failureLayout).setVisibility(android.view.View.GONE);
+        fragmentTopLayout.setVisibility(android.view.View.VISIBLE);
+        bottomLayout.setVisibility(android.view.View.VISIBLE);
+        progressBar.setVisibility(android.view.View.GONE);
+        failureLayout.setVisibility(android.view.View.GONE);
     }
 
     @Override
     public void showOnFailureMessage(String message) {
-
-        TextView failureText = (TextView) mRootVIew.findViewById(R.id.failureText);
         failureText.setText(message);
-        mRootVIew.findViewById(R.id.progressBar).setVisibility(android.view.View.GONE);
-        mRootVIew.findViewById(R.id.failureLayout).setVisibility(android.view.View.VISIBLE);
+        progressBar.setVisibility(android.view.View.GONE);
+        failureLayout.setVisibility(android.view.View.VISIBLE);
     }
 
     @Override

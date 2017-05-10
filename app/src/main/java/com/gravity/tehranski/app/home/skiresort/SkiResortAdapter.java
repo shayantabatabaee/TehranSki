@@ -1,4 +1,4 @@
-package com.Gravity.TehranSki.app.home.skiresort;
+package com.gravity.tehranski.app.home.skiresort;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

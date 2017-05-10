@@ -1,6 +1,6 @@
-package com.Gravity.TehranSki.app.home.skiresort;
+package com.gravity.tehranski.app.home.skiresort;
 
-import com.Gravity.TehranSki.business.model.SkiResort;
+import com.gravity.tehranski.business.model.SkiResort;
 
 
 public interface SkiResortContract {

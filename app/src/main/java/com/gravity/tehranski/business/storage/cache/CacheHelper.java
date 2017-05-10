@@ -1,10 +1,10 @@
-package com.Gravity.TehranSki.business.storage.cache;
+package com.gravity.tehranski.business.storage.cache;
 
 import android.app.ActivityManager;
 import android.content.Context;
 import android.support.v4.util.LruCache;
 
-import com.Gravity.TehranSki.business.model.SkiResort;
+import com.gravity.tehranski.business.model.SkiResort;
 
 /**
  * Created by shayantabatabee on 11/28/16.

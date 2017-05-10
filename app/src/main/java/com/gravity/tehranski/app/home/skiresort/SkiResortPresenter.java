@@ -1,9 +1,9 @@
-package com.Gravity.TehranSki.app.home.skiresort;
+package com.gravity.tehranski.app.home.skiresort;
 
 import android.content.Context;
 
-import com.Gravity.TehranSki.business.SkiResortRepository;
-import com.Gravity.TehranSki.business.model.SkiResort;
+import com.gravity.tehranski.business.SkiResortRepository;
+import com.gravity.tehranski.business.model.SkiResort;
 
 public class SkiResortPresenter implements SkiResortContract.Presenter {
 

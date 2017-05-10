@@ -1,4 +1,4 @@
-package com.Gravity.TehranSki.app.home;
+package com.gravity.tehranski.app.home;
 
 import android.os.Bundle;
 import android.support.v4.util.SparseArrayCompat;
@@ -9,19 +9,18 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import com.Gravity.TehranSki.R;
-import com.Gravity.TehranSki.app.home.skiresort.SkiResortAdapter;
-import com.Gravity.TehranSki.business.model.SkiResort;
-import com.Gravity.TehranSki.business.model.SkiResortList;
+import com.gravity.tehranski.R;
+import com.gravity.tehranski.app.home.skiresort.SkiResortAdapter;
+import com.gravity.tehranski.business.model.SkiResort;
+import com.gravity.tehranski.business.model.SkiResortList;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.viewpagerindicator.CirclePageIndicator;
 
-public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    // layout Objects
-    private View background;
-    private ViewPager viewPager;
+public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     // data Objects
     private String currentBackground;
@@ -32,12 +31,17 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     //adapter object
     SkiResortAdapter adapter;
 
+    //ButterKnife View Binding
+    @BindView(R.id.background)
+    View background;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        findViews();
+        ButterKnife.bind(this);
 
         initObjects();
 
@@ -46,12 +50,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
         }
 
-
-    }
-
-    private void findViews() {
-        background = findViewById(R.id.background);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
     }
 
     private void initObjects() {

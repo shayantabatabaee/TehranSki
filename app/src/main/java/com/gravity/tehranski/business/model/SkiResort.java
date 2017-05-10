@@ -1,4 +1,4 @@
-package com.Gravity.TehranSki.business.model;
+package com.gravity.tehranski.business.model;
 
 import java.util.ArrayList;
 

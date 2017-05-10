@@ -1,4 +1,4 @@
-package com.Gravity.TehranSki.business.net;
+package com.gravity.tehranski.business.net;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -9,7 +9,7 @@ import android.support.v7.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.Gravity.TehranSki.R;
+import com.gravity.tehranski.R;
 
 
 public class FCMService extends FirebaseMessagingService {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.Gravity.TehranSki">
+    package="com.gravity.tehranski">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.Gravity.TehranSki.app.SplashActivity"
+            android:name="com.gravity.tehranski.app.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,11 +20,11 @@
         </activity>
 
         <activity
-            android:name="com.Gravity.TehranSki.app.home.HomeActivity"
+            android:name="com.gravity.tehranski.app.home.HomeActivity"
             android:theme="@style/AppTheme" />
 
         <service
-            android:name="com.Gravity.TehranSki.business.net.FCMService"
+            android:name="com.gravity.tehranski.business.net.FCMService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
