@@ -2,7 +2,6 @@ package com.gravity.tehranski.app.dagger;
 
 
 import com.gravity.tehranski.app.ui.home.skiresort.SkiResortFragment;
-import com.gravity.tehranski.business.SkiResortRepository;
 
 import javax.inject.Singleton;
 
@@ -14,5 +13,4 @@ public interface AppComponent {
 
     void inject(SkiResortFragment target);
 
-    void inject(SkiResortRepository target);
 }

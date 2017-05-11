@@ -9,7 +9,7 @@ public class ModelModule {
     @Provides
     @CustomAnnotation.HeightLevelName
     public String provideHeightLevel() {
-        return "max";
+        return "mid";
     }
 
 }

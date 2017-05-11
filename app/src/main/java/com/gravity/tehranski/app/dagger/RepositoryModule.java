@@ -17,8 +17,9 @@ public class RepositoryModule {
 
     @Singleton
     @Provides
-    SkiResortRepository provideSkiResortRepository() {
-        return new SkiResortRepository();
+    SkiResortRepository provideSkiResortRepository(CacheHelper cacheHelper, VolleyHelper volleyHelper
+            ,@CustomAnnotation.HeightLevelName String height) {
+        return new SkiResortRepository(cacheHelper, volleyHelper, height);
     }
 
     @Singleton

@@ -1,6 +1,5 @@
 package com.gravity.tehranski.business;
 
-import com.gravity.tehranski.app.TehranSkiApplication;
 import com.gravity.tehranski.app.dagger.CustomAnnotation;
 import com.gravity.tehranski.business.model.SkiResort;
 import com.gravity.tehranski.business.net.VolleyHelper;
@@ -10,16 +9,17 @@ import javax.inject.Inject;
 
 
 public class SkiResortRepository {
-    @Inject
-    CacheHelper cacheHelper;
-    @Inject
-    VolleyHelper volleyHelper;
-    @Inject
-    @CustomAnnotation.HeightLevelName
-    String height;
 
-    public SkiResortRepository() {
-        TehranSkiApplication.getsApplication().getAppComponent().inject(this);
+    private CacheHelper cacheHelper;
+    private VolleyHelper volleyHelper;
+    private String height;
+
+    @Inject
+    public SkiResortRepository(CacheHelper cacheHelper, VolleyHelper volleyHelper
+            , @CustomAnnotation.HeightLevelName String heightLevel) {
+        this.height = heightLevel;
+        this.volleyHelper = volleyHelper;
+        this.cacheHelper = cacheHelper;
     }
 
     public void getSkiResort(final String key, final SkiResortListener listener) {
