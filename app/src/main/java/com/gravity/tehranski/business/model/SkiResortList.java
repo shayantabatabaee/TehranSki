@@ -18,9 +18,7 @@ public class SkiResortList {
         resortNames.add("Tochal");
         resortNames.add("Shemshak");
         resortNames.add("Dizin");
-        resortNames.add("Badaling");
         resortNames.add("Darbandsar");
-        resortNames.add("Alta");
         resortNames.add("Abali");
 
     }
