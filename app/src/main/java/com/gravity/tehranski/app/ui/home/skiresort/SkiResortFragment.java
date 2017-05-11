@@ -91,7 +91,8 @@ public class SkiResortFragment extends Fragment implements SkiResortContract.Vie
         super.onCreate(savedInstanceState);
         resortName = getArguments().getString(ARG_RESORT_NAME);
         position = getArguments().getInt(ARG_POSITION);
-        ((TehranSkiApplication) getActivity().getApplication()).getAppComponent().inject(this);
+        //((TehranSkiApplication) getActivity().getApplication()).getAppComponent().inject(this);
+        TehranSkiApplication.getsApplication().getAppComponent().inject(this);
     }
 
     @Override

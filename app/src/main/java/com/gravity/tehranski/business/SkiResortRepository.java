@@ -1,7 +1,5 @@
 package com.gravity.tehranski.business;
 
-import android.content.Context;
-
 import com.gravity.tehranski.app.TehranSkiApplication;
 import com.gravity.tehranski.business.model.SkiResort;
 import com.gravity.tehranski.business.net.VolleyHelper;
@@ -19,8 +17,8 @@ public class SkiResortRepository {
 
     private static String height = "mid";
 
-    public SkiResortRepository(Context context) {
-        ((TehranSkiApplication) context.getApplicationContext()).getAppComponent().inject(this);
+    public SkiResortRepository() {
+        TehranSkiApplication.getsApplication().getAppComponent().inject(this);
     }
 
     public void getSkiResort(final String key, final SkiResortListener listener) {

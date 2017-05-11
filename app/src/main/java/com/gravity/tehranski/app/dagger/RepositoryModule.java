@@ -17,8 +17,8 @@ public class RepositoryModule {
 
     @Singleton
     @Provides
-    SkiResortRepository provideSkiResortRepository(Context context) {
-        return new SkiResortRepository(context);
+    SkiResortRepository provideSkiResortRepository() {
+        return new SkiResortRepository();
     }
 
     @Singleton
