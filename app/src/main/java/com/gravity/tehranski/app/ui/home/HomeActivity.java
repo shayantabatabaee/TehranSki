@@ -36,6 +36,8 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     View background;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    @BindView(R.id.pageIndicator)
+    CirclePageIndicator pageIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         currentPosition = 0;
         currentBackground = "";
         skiResortHashMap = new SparseArrayCompat<>();
-
+        //TODO:DI for adapter
         adapter = new SkiResortAdapter(getSupportFragmentManager(), SkiResortList.getInstance().getResortsName());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
@@ -69,7 +71,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         });
 
-        CirclePageIndicator pageIndicator = (CirclePageIndicator) findViewById(R.id.pageIndicator);
         pageIndicator.setViewPager(viewPager);
         playServiceError = this.getResources().getString(R.string.play_service_error);
 
